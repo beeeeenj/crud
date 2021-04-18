@@ -24,26 +24,59 @@
       <h3 class="card-title">List</h3>
 
       <div class="card-tools">
-        <button type="button"  data-url="/departments/create/" class="btn btn-outline-primary btn-xs btn-modal"  title="Add Department">
+        <button type="button"  data-url="/departments/create/" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Department">
           Add Department
         </button>
       </div>
     </div>
 
         <div class="card-body">
-        
+          <table id="tbl_dtable" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th></th>
+            </tr>
+            </tfoot>
+          </table>
             
         </div>
     </div>
     <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
 @endsection
 
 
 @section('script')
 <script>
-   
+    var tbl_dtable =  $('#tbl_dtable').DataTable({
+            searchDelay: 400,
+            "paging": true,
+            "lengthChange": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            pageLength: 10,
+            "processing": true,
+            "serverSide": true,
+            ajax: {
+                url: "/api/department/list",
+            },
+    });
 
    $(document).on("submit", ".formSubmit", function(e) {
        e.preventDefault()
@@ -57,19 +90,33 @@
         errors.empty()
         $.LoadingOverlay('hide')
         if(res.data.errors) {
-          
            res.data.errors.map((err) => {
             errors.append(` <div id="errors" class="alert alert-danger">${err}</div>`);
            })
+
+           Toast.fire({
+                icon: 'error',
+                title: 'The given data was invalid.'
+           })
+        }
+
+        if(res.data.success) {
+          modal.modal('hide')
+          
+          Toast.fire({
+                icon: 'success',
+                title: 'Record saved!'
+          })
+
+          tbl_dtable.ajax.reload()
         }
        
        }).catch((err) => {
-         if(err.response.status == 422) {
-            var errors = err.response.data.errors
-         }
         $.LoadingOverlay('hide')
        })
 
     });
+    //  
+   
 </script>
 @endsection
