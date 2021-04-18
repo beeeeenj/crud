@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function index() {
         $employees = Employees::all();
-        return view('home', ['employees' => $employees ]);
+        return view('home', ['employees' => $employees, 'page_title' => 'Employees' ] );
     }
 }

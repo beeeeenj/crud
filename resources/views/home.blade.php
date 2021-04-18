@@ -1,14 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-12 col-md">
-        <a class="btn btn-outline-primary" href="/employees/create">Add Employee</a>
-        @if(session()->get('success'))
-            <div class="alert alert-success mt-3">
-            {{ session()->get('success') }}  
-            </div>
-        @endif
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>{{ $page_title }}</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">{{ $page_title }}</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+   <!-- Default box -->
+ <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">List</h3>
+
+      <div class="card-tools">
+        <button type="button"  href="/employees/create" class="btn btn-outline-primary btn-xs"  title="Collapse">
+          Add Employee
+        </button>
+      
+      </div>
+    </div>
+
+    <div class="card-body">
+       
         <div class="table-responsive">
             <table class="table table-bordered mt-3">
                 <thead>
@@ -53,7 +75,17 @@
                 </tbody>
             </table>
         </div>
-        
     </div>
-</div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+@endsection
+
+
+@section('script')
+    <script>
+        axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+            
+        })
+    </script>
 @endsection

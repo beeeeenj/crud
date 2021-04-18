@@ -39,4 +39,12 @@
        {{ Form::close() }}
     </div>
 </div>  
+
+
+@endsection
+
+@section('script')
+    <script>
+        alert('aaa')
+    </script>
 @endsection
