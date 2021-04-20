@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lindela Travel & Tours</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,6 +18,9 @@
   <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+
   @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -166,22 +170,48 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
+            <a href="{{ url('/departments') }}" class="nav-link {{ (request()->is('departments*')) ? 'active' : '' }}">
+              <i class="nav-icon far fa-building "></i>
               <p>Departments  </p>
             </a>
           </li>
-          <li class="nav-item">
+          
+          <li class="nav-item {{ (request()->is('hr*')) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Employees  </p>
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Human Resources
+                <i class="fas fa-angle-left right"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-header">Recruitment</li>
+              <li class="nav-item">
+                <a href="{{ url('/hr/careers/') }}" class="nav-link {{ (request()->is('hr/careers*')) ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Careers</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('/hr/applicants/') }}" class="nav-link {{ (request()->is('hr/applicants*')) ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Applicants</p>
+                </a>
+              </li>
+              <li class="nav-header">201</li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon far fa-circle text-info"></i>
+                  <p>Employees  </p>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -248,20 +278,29 @@
 
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
-  axios.defaults.xsrfCookieName = 'csrftoken';
-  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-
+ 
   var Toast = Swal.mixin({
       toast: true,
       position: 'bottom-end',
       showConfirmButton: false,
       timer: 6000
   });
+
+
+
+  // When the user clicks on the button, scroll to the top of the document
+  var topFunction = () => {
+        document.body.scrollTop = 0 // For Safari
+        document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE and Opera
+  } 
+
 
 
   var modal = $("#main-modal") 

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\hr\CareerController;
+use App\Http\Controllers\hr\ApplicantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +26,8 @@ Route::get('/',[HomeController::class, 'index' ]);
 
 Route::resource('employees', EmployeesController::class);
 Route::resource('departments', DepartmentController::class);
+
+Route::prefix('hr')->group(function () {
+    Route::resource('careers', CareerController::class);
+    Route::resource('applicants', ApplicantController::class);
+});

@@ -7,6 +7,7 @@ use Validator;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class DepartmentController extends Controller
 {
@@ -78,7 +79,9 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Department::findOrFail($id);
+        $html = view('department.view', ['data' => $data, 'title' => $data->name])->render();
+        return response()->json($html);
     }
 
     /**
@@ -89,7 +92,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Department::findOrFail($id);
+        $html = view('department.edit', ['data' => $data, 'title' => $data->name])->render();
+        return response()->json($html);
     }
 
     /**
@@ -101,7 +106,34 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Department::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' =>  'required|unique:departments,name,'.$id,
+            'code' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+
+        $data->name = $request->get('name');
+        $data->code = $request->get('code');
+        $data->description = $request->get('description');
+        
+
+        if ($request->hasFile('image')) {
+                $filenameWithExt = $request->file('image')->getClientOriginalName ();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $fileNameToStore = $filename. '_'. time().'.'.$extension;
+                $data->image = $fileNameToStore;
+                $request->file('image')->storeAs('public/image/department', $fileNameToStore);
+        }
+        $data->save();
+        return response()->json(['success' => $data]);
     }
 
     /**
@@ -112,7 +144,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Department::findOrFail($id);
+        $data->delete();
+        return response()->json(['success' => true]);
     }
 
     public function list(Request $request) {
@@ -132,12 +166,13 @@ class DepartmentController extends Controller
         }
 
         foreach ($results as $result) {
+            $actions = "<a type='button' class='btn btn-primary btn-sm btn-view' data-id='{$result->id}'>   <i class='far fa-eye'></i> </a>";
             $data[] = array(
                $result->name,
                $result->code,
                Carbon::parse($result->created_at)->format("Y-m-d, h:mm a"),
                Carbon::parse($result->updataed_at)->format("Y-m-d, h:mm a"),
-               '',
+               $actions,
             );
            
         }

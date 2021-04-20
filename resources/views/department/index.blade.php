@@ -2,7 +2,49 @@
 
 @section('content')
 
+<script>
+  var btnAction = (action_type, id) => {
+         
+         if(action_type == "edit") {
+           $.LoadingOverlay('show')
+            //modal.find('.modal-content').empty()
+            axios.get(`/departments/${id}/edit`).then((res) => { 
+              modal.find('.modal-content').html(res.data)
+              modal.modal('show')
+              $.LoadingOverlay('hide')
+            }).catch((err) => {
+              $.LoadingOverlay('hide')
+            })
+         }
+ 
+         if(action_type == "delete") {
 
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $.LoadingOverlay('show')
+                axios.delete(`/departments/${id}`).then((res) => {
+                  tbl_dtable.ajax.reload()
+                  Swal.fire(
+                    'Deleted!',
+                    'Your data has been deleted.',
+                    'success'
+                  )
+                  $.LoadingOverlay('hide')
+                  modal.modal('hide')
+                })
+              }
+            })
+         }
+     } 
+</script>
 <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -31,27 +73,18 @@
     </div>
 
         <div class="card-body">
-          <table id="tbl_dtable" class="table table-bordered table-hover">
+          <table id="tbl_dtable" class="table table-bordered table-hover table-sm">
             <thead>
             <tr>
               <th>Name</th>
               <th>Code</th>
               <th>Created At</th>
               <th>Updated At</th>
-              <th></th>
+              <th style="width: 1%"></th>
             </tr>
             </thead>
             <tbody>
             </tbody>
-            <tfoot>
-            <tr>
-              <th>Name</th>
-              <th>Code</th>
-              <th>Created At</th>
-              <th>Updated At</th>
-              <th></th>
-            </tr>
-            </tfoot>
           </table>
             
         </div>
@@ -84,9 +117,30 @@
 
        var dt = $(this)
        var action = dt.attr("action")
+       var method = dt.attr("method")
        var data = new FormData(this)
+
+       
+
+       var options = {
+         method,
+         url: action,
+         data
+       }
+
+       try {  
+         method = data.get('_method') 
+         if(method == "PUT") {
+           options['_method'] = 'PATCH'
+         }
+        } catch (error) {
+
+       }
+
+       console.log(options)
+
        $.LoadingOverlay('show')
-       axios.post(action, data).then((res) => {
+       axios(options).then((res) => {
         errors.empty()
         $.LoadingOverlay('hide')
         if(res.data.errors) {
@@ -97,7 +151,10 @@
            Toast.fire({
                 icon: 'error',
                 title: 'The given data was invalid.'
+                
            })
+
+           topFunction()
         }
 
         if(res.data.success) {
@@ -116,7 +173,25 @@
        })
 
     });
+
+    $("#tbl_dtable").on('click', '.btn-view', function() {
+        var data = $(this)
+        var id = data.attr('data-id')
+        $.LoadingOverlay('show')
+        modal.find('.modal-content').empty()
+        axios.get(`/departments/${id}`).then((res) =>{
+          modal.find('.modal-content').html(res.data)
+          modal.modal('show')
+          $.LoadingOverlay('hide')
+        }).catch((err) => {
+          $.LoadingOverlay('hide')
+        })
+    })
+
     //  
+
+
+    
    
 </script>
 @endsection
