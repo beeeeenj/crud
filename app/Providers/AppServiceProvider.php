@@ -54,5 +54,9 @@ class AppServiceProvider extends ServiceProvider
  
             return $this;
         });
+
+        if($this->app->environment('production')) {
+          \URL::forceScheme('https');
+        }
     }
 }
