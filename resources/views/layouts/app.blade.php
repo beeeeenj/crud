@@ -9,17 +9,17 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ secure_asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- DataTables -->
-  <link rel="stylesheet" href="{{ secure_asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ secure_asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ secure_asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="{{ secure_asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ secure_asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <!-- summernote -->
-  <link rel="stylesheet" href="{{ secure_asset('plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 
   @yield('css')
 </head>
@@ -148,7 +148,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-      <img src="{{ secure_asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="Lindela Travel & Tours Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Lindela Travel & Tours</span>
     </a>
 
@@ -157,7 +157,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ secure_asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Name</a>
@@ -255,35 +255,35 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{ secure_asset('plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 
-<script src="{{ secure_asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- SweetAlert2 -->
-<script src="{{ secure_asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <!-- DataTables  & Plugins -->
-<script src="{{ secure_asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ secure_asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
 <!-- AdminLTE App -->
-<script src="{{ secure_asset('dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- Summernote -->
-<script src="{{ secure_asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ secure_asset('dist/js/demo.js') }}"></script>
+<script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-<script src="{{ secure_asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
  
   var Toast = Swal.mixin({

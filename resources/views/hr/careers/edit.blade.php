@@ -1,4 +1,4 @@
-{{ Form::open(array('url' => route('careers.store'), 'class'  => 'formSubmit','files'=>true )) }}
+{{ Form::model($data, array('route' => array('careers.update', $data->id), 'method' => 'PUT', 'class'  => 'formSubmit','files'=>true )) }}
 <div class="modal-header">
     <h5 class="modal-title">{{  $title }}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,7 +14,7 @@
 
             <div class="form-group">   
                 {{ Form::label('department', 'Department', ['class' => '']) }}
-                {{ Form::select('department', $departments, [null], ['class' => 'form-control']) }}
+                {{ Form::select('department', $departments, [$data->department_id], ['class' => 'form-control']) }}
             </div>
 
             <div class="form-group">   
@@ -24,12 +24,12 @@
 
            <div class="form-group">   
             {{ Form::label('status', 'Is hiring', ['class' => '']) }}
-            {{ Form::checkbox('status', null, []) }}
+            {{ Form::checkbox('status', null, $data->status ? true : false ) }}
          </div>
 
   </div>
   <div class="modal-footer">
-   {!! Form::submit('Save', ['class' => 'btn btn-success','id'=> 'btnSubmit']) !!}
+   {!! Form::submit('Update', ['class' => 'btn btn-success','id'=> 'btnSubmit']) !!}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
   </div>
   {{ Form::close() }}
