@@ -55,7 +55,7 @@ class EmployeesController extends Controller
             'gender' => $request->get('gender'),
         ]);
         $contact->save();
-        return redirect('/')->with('success', 'Record saved!');
+        return redirect()->back()->with('success', 'Thank you');   
 
     }
 

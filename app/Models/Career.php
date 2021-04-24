@@ -16,6 +16,11 @@ class Career extends Model
         'title',
         'department_id',
         'description',
+        'educational_requirements',
+        'no_of_vacancy',
+        'employment_status',
+        'location',
+        'salary',
         'status',     
     ];
 

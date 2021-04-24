@@ -5,9 +5,12 @@
 <script>
   var btnAction = (action_type, id) => {
          if(action_type == "edit") {
+          var url = '{{ route("careers.edit", ":id") }}';
+          url = url.replace(':id',id);
+
            $.LoadingOverlay('show')
             //modal.find('.modal-content').empty()
-            axios.get(`/hr/careers/${id}/edit`).then((res) => { 
+            axios.get(url).then((res) => { 
               modal.find('.modal-content').html(res.data)
               modal.modal('show')
               $.LoadingOverlay('hide')
@@ -67,10 +70,10 @@
       <h3 class="card-title">List</h3>
 
       <div class="card-tools">
-        <a type="button"  href="#" class="btn btn-outline-primary  btn-sm "  >
+        <a type="button"  href="{{ route('careers.prev_index') }}" target="_blank" class="btn btn-outline-primary  btn-sm "  >
           Preview Page
         </a>
-        <button type="button"  data-url="/hr/careers/create" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Careers">
+        <button type="button"  data-url="{{ route('careers.create') }}" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Careers">
           Add Careers
         </button>
       </div>
@@ -82,10 +85,10 @@
             <tr>
               <th>Title</th>
               <th>Department</th>
-              <th>Slug</th>
+              <th>Employment Status</th>
+              <th>Location</th>
+              <th>No. of Vacancy</th>
               <th>Status</th>
-              <th>Created At</th>
-              <th>Updated At</th>
               <th style="width: 1%"></th>
             </tr>
             </thead>
@@ -114,7 +117,7 @@
             "processing": true,
             "serverSide": true,
             ajax: {
-                url: "/api/hr/careers/list/",
+                url: "{{ route('careers.list') }}",
             },
     });
 
@@ -183,7 +186,11 @@
         var id = data.attr('data-id')
         $.LoadingOverlay('show')
         modal.find('.modal-content').empty()
-        axios.get(`/hr/careers/${id}`).then((res) =>{
+
+        var url = '{{ route("careers.show", ":id") }}';
+        url = url.replace(':id',id);
+
+        axios.get(`${url}`).then((res) =>{
           modal.find('.modal-content').html(res.data)
           modal.modal('show')
           $.LoadingOverlay('hide')

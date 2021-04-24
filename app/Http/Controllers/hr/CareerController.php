@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\Career;
+use App\Models\Applicant;
 
 use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
@@ -15,6 +16,7 @@ use Validator;
 
 class CareerController extends Controller
 {
+    protected $employment_status = array('Full Time' => 'Full Time', 'Part Time' => 'Part Time', 'Remote' => 'Remote','Project Based' => 'Project Based');
     public function index()
     {
         return view('hr.careers.index', ['page_title' => 'Careers']);
@@ -25,6 +27,7 @@ class CareerController extends Controller
 
         $data['title'] = 'Add Career';
         $data['departments'] = Department::pluck('name','id');
+        $data['employment_status'] = $this->employment_status;
         $html = view('hr.careers.create', $data)->render();
         return response()->json($html);
     }
@@ -34,7 +37,10 @@ class CareerController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|unique:careers|min:5',
             'department' => 'required',
-            'description' => 'required|min:20',
+            'employment_status' => 'required',
+            'location' => 'required',
+            'job_responsibility' => 'required|min:20',
+            'educational_requirements' => 'required|min:20',
         ]);
 
         if($validator->fails()) {
@@ -50,7 +56,12 @@ class CareerController extends Controller
         $data = new Career([
             'title' => $request->get('title'),
             'department_id' => $request->get('department'),
-            'description' => $request->get('description'),
+            'description' => $request->get('job_responsibility'),
+            'educational_requirements' => $request->get('educational_requirements'),
+            'no_of_vacancy' => $request->get('no_of_vacancy'),
+            'employment_status' => $request->get('employment_status'),
+            'location' => $request->get('location'),
+            'salary' => $request->get('salary'),
             'status' => $status,
         ]);
 
@@ -73,10 +84,12 @@ class CareerController extends Controller
     public function edit($id)
     {
         $data = Career::findOrFail($id);
+   
         $html = view('hr.careers.edit', 
             [
             'data' => $data, 
             'title' => $data->title,
+            'employment_status' => $this->employment_status,
             'departments' => Department::pluck('name','id') 
             ])->render();
         return response()->json($html);
@@ -86,10 +99,15 @@ class CareerController extends Controller
     {
         $data = Career::findOrFail($id);
 
+ 
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|unique:careers,title,'.$id,
             'department' => 'required',
-            'description' => 'required|min:20',
+            'employment_status' => 'required',
+            'location' => 'required',
+            'job_responsibility' => 'required|min:20',
+            'educational_requirements' => 'required|min:20',
         ]);
 
         if($validator->fails()) {
@@ -102,9 +120,15 @@ class CareerController extends Controller
             $status = false;
         }
 
+
         $data->title = $request->get('title');
         $data->department_id = $request->get('department');
-        $data->description = $request->get('description');
+        $data->description = $request->get('job_responsibility');
+        $data->educational_requirements = $request->get('educational_requirements');
+        $data->no_of_vacancy = $request->get('no_of_vacancy');
+        $data->employment_status = $request->get('employment_status');
+        $data->location = $request->get('location');
+        $data->salary = $request->get('salary');
         $data->status = $status;
         $data->save();
         
@@ -123,7 +147,7 @@ class CareerController extends Controller
 
         if($search)  {
             $results = Career::query()
-            ->whereLike(['title', 'description','department.name'], $search)
+            ->whereLike(['title','department.name','location','employment_status'], $search)
             ->orderBy('id', 'desc')
             ->paginate($length, ['*'], 'page', $page );
             $recordsFiltered = count($results);
@@ -142,10 +166,10 @@ class CareerController extends Controller
             $data[] = array(
                $result->title,
                $result->department->name,
-               $result->slug,
+               $result->employment_status,
+               $result->location,
+               $result->no_of_vacancy,
                $status,
-               Carbon::parse($result->created_at)->format("Y-m-d, h:mm a"),
-               Carbon::parse($result->updataed_at)->format("Y-m-d, h:mm a"),
                $actions,
             );
            
@@ -156,5 +180,68 @@ class CareerController extends Controller
         $dt['recordsFiltered'] = $recordsFiltered;
         $dt['draw'] = $request->draw;
         return $dt;
+    }
+
+    public function preview($slug)
+    {
+        $data = Career::where('slug',$slug)->first();
+        
+        $data['data'] = $data;
+        return view('hr.careers.preview', $data);
+    }
+
+    public function apply($slug)
+    {
+        $data = Career::where('slug',$slug)->first();
+        $data['data'] = $data;
+        return view('hr.careers.apply', $data);
+    }
+
+    public function prev_index(){
+        return view('hr.careers.prev_index');
+    }
+
+    public function apply_store(Request $request,$slug)
+    {
+        $career = Career::where('slug',$slug)->first();
+
+        $request->validate([
+            'first_name'=>'required|min:5|max:20',
+            'last_name'=>'required|min:5',
+            'gender'=>'required',
+            'file'=>'required',
+            'contact'=>'required|min:11|',
+            'email'=>'required|email',
+            'agreement'=>'required',
+        ]);
+
+        $count = Applicant::all()->count() + 1;
+        $count = str_pad($count,'6','0',STR_PAD_LEFT);
+
+        $data = new Applicant();
+        $data->first_name = $request->get('first_name');
+        $data->middle_name = $request->get('middle_name');
+        $data->last_name = $request->get('last_name');
+        $data->gender = $request->get('gender');
+        $data->contact = $request->get('contact');
+        $data->referred_by = $request->get('referred_by');
+        $data->ref_no = 'APT-'.$count;
+        $data->career_id = $career->id;
+        $data->email = $request->get('email');
+
+        if ($request->hasFile('file')) {
+
+            $filenameWithExt = $request->file('file')->getClientOriginalName ();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('file')->getClientOriginalExtension();
+            $fileNameToStore = $filename. '_'. time().'.'.$extension;
+            $data->file = $fileNameToStore;
+            $request->file('file')->storeAs('public/files/applicant', $fileNameToStore);
+        }
+
+        $data->save();
+    
+        return $count;
+        // return redirect('/')->with('success', 'Record saved!');
     }
 }

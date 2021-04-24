@@ -29,5 +29,10 @@ Route::resource('departments', DepartmentController::class);
 
 Route::prefix('hr')->group(function () {
     Route::resource('careers', CareerController::class);
+    Route::get('careers/preview/index/',[CareerController::class, 'prev_index' ])->name('careers.prev_index');
+    Route::get('careers/preview/view/{slug}/',[CareerController::class, 'preview' ])->name('careers.view');
+    Route::get('careers/preview/apply/{slug}/',[CareerController::class, 'apply' ])->name('careers.apply');
+    Route::post('careers/preview/apply/{slug}/',[CareerController::class, 'apply_store' ])->name('careers.apply.store');
     Route::resource('applicants', ApplicantController::class);
+    
 });

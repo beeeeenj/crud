@@ -21,4 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/department/list/',[DepartmentController::class, 'list' ]);
-Route::get('/hr/careers/list/',[CareerController::class, 'list' ]);
+Route::get('/hr/careers/list/',[CareerController::class, 'list' ])->name('careers.list');
