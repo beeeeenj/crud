@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -203,5 +204,18 @@ class ApplicantController extends Controller
         
         return response()->json(['success' => $data]);
 
+    }
+
+    public function count_status() {
+        $pending = Applicant::where('status','Pending')->count();
+        $fi = Applicant::where('status','For Interview')->count();
+        $q = Applicant::where('status','Qualified')->count();
+        $nq = Applicant::where('status','Not Qualified')->count();
+        return response()->json(['pending' => $pending, 'fi' => $fi,'q'=> $q, 'nq' => $nq ]);
+    }
+
+    public function get_info($id) {
+        $data = Applicant::findOrFail($id);
+        return response()->json([$data]);
     }
 }

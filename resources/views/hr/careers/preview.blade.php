@@ -9,7 +9,16 @@
     <!-- Header Section End -->
 
     <!-- Page Header Start -->
-    <div class="page-header" style="background: url({{ asset('assets/img/banner1.jpg') }}">
+
+    
+
+    @if ($data->department->image)
+        <div class="page-header" style="background: url({{ $data->department->image }}">
+        @else
+        <div class="page-header" style="background: url({{ asset('assets/img/banner1.jpg') }}">
+    @endif
+
+    
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

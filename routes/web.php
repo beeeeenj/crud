@@ -36,8 +36,12 @@ Route::prefix('hr')->group(function () {
     Route::get('careers/preview/view/{slug}/',[CareerController::class, 'preview' ])->name('careers.view');
     Route::get('careers/preview/apply/{slug}/',[CareerController::class, 'apply' ])->name('careers.apply');
     Route::post('careers/preview/apply/{slug}/',[CareerController::class, 'apply_store' ])->name('careers.apply.store');
+    
+    Route::get('applicants/count-status/', [ApplicantController::class,'count_status'])->name('applicants.count_status');
+    Route::get('applicants/get-info/{id}/', [ApplicantController::class,'get_info'])->name('applicants.get_info');
     Route::resource('applicants', ApplicantController::class);
 
+   
     Route::post('applicants/view/update/{id}/', [ApplicantController::class,'view_update'])->name('applicants.view.update');
     
 });

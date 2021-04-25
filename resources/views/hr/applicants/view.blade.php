@@ -65,10 +65,15 @@
 
     <button type="button" onclick="btnAction('edit', {{ $data->id }})" class="btn btn-primary">Edit</button>
 
-    @if ($data->status == "Qualified" && $data->is_hire == false)
-        <button type="button" class="btn btn-danger">Create Account</button>
+    @if ($data->status == "Qualified" && $data->is_hired == false)
+        <button type="button" onclick="btnCreateAccount({{ $data->id }})"  class="btn btn-danger">Create 201</button>
     @else
-       <button type="button" data-toggle="tooltip" data-placement="top" title="Change status to Qualified" disabled class="btn btn-danger">Create Account</button>
+        @if ($data->is_hired == false)
+            <button type="button" data-toggle="tooltip" data-placement="top" title="Change status to Qualified" disabled class="btn btn-danger">Create 201</button>
+        @else
+            <button type="button" data-toggle="tooltip" data-placement="top" title="Already Hired" disabled class="btn btn-danger">Create 201</button>
+        @endif
+     
     @endif
 
     <a href="{{ $data->file }}" target="_blank" class="btn btn-outline-info">Show File</a>
