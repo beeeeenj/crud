@@ -22,6 +22,9 @@ use App\Http\Controllers\hr\ApplicantController;
 //     return view('welcome');
 // });
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/',[HomeController::class, 'index' ]);
 
 Route::resource('employees', EmployeesController::class);
@@ -38,3 +41,8 @@ Route::prefix('hr')->group(function () {
     Route::post('applicants/view/update/{id}/', [ApplicantController::class,'view_update'])->name('applicants.view.update');
     
 });
+
+
+Route::get('department/list/',[DepartmentController::class, 'list' ])->name('department.list');
+Route::get('hr/careers/list/2/',[CareerController::class, 'list' ])->name('careers.list');
+Route::get('hr/applicant/list/',[ApplicantController::class, 'list' ])->name('applicant.list');

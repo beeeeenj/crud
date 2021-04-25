@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Storage;
 
 class CareerController extends Controller
 {
+    
     protected $employment_status = array('Full Time' => 'Full Time', 'Part Time' => 'Part Time', 'Remote' => 'Remote','Project Based' => 'Project Based');
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         return view('hr.careers.index', ['page_title' => 'Careers']);

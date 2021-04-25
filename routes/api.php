@@ -20,7 +20,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('/department/list/',[DepartmentController::class, 'list' ])->name('department.list');
-Route::get('/hr/careers/list/',[CareerController::class, 'list' ])->name('careers.list');
-Route::get('/hr/applicant/list/',[ApplicantController::class, 'list' ])->name('applicant.list');

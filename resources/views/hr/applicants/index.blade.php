@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -72,16 +72,16 @@
       <div class="card-tools">
         <div id="status_selector" class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-sm btn-warning active">
-              <input type="radio" name="options" id="option1" value="Pending" autocomplete="off" checked> Pending (0) 
+              <input type="radio" name="options" id="option1" value="Pending" autocomplete="off" checked> Pending (<span id="count_pending">0</span>) 
             </label>
             <label class="btn btn-sm btn-warning">
-              <input type="radio" name="options" id="option2" value="For Interview" autocomplete="off"> For Interview (0) 
+              <input type="radio" name="options" id="option2" value="For Interview" autocomplete="off"> For Interview (<span id="count_fi">0</span>)
             </label>
             <label class="btn btn-sm btn-warning">
-              <input type="radio" name="options" id="option3" value="Qualified" autocomplete="off"> Qualified (0) 
+              <input type="radio" name="options" id="option3" value="Qualified" autocomplete="off"> Qualified (<span id="count_q">0</span>)
             </label>
             <label class="btn btn-sm btn-warning">
-                <input type="radio" name="options" id="option4" value="Not Qualified" autocomplete="off"> Not Qualified (0) 
+                <input type="radio" name="options" id="option4" value="Not Qualified" autocomplete="off"> Not Qualified (<span id="count_nq">0</span>)
               </label>
           </div>
         <button type="button"  data-url="{{ route('applicants.create') }}" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Applicant">
