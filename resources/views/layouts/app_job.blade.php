@@ -44,7 +44,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand logo" href="{{ route('careers.prev_index') }}"><img width="80px" src="{{ asset('skin11r.header-logo-regular.png') }}" alt=""></a>
+                    <a class="navbar-brand logo" href="{{ route('careers.prev_index') }}"><img width="80px" src="{{ asset('skin11r.header-logo-regular.jpg') }}" alt=""></a>
                   </div>
                   <div class="collapse navbar-collapse" id="navbar">              
                      <!-- Start Navigation List -->
