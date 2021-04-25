@@ -152,7 +152,7 @@
     <div class="float-right d-none d-sm-block">
       Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
     </div>
-    <strong>Copyright &copy; 2014-2021
+    <strong>Copyright &copy; 2021
   </footer>
 
   <!-- Control Sidebar -->
