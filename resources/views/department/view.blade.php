@@ -25,7 +25,7 @@
             </p>
 
             @if ($data->image)
-            <img class="img-fluid" src="{{ asset('storage/image/department/') }}/{{ $data->image }}" />
+              <img class="img-fluid" src="{{ $data->image }}" />
             @endif
 
           </div>

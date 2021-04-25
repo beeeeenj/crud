@@ -8,6 +8,7 @@ use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class DepartmentController extends Controller
 {
@@ -60,12 +61,15 @@ class DepartmentController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-                $filenameWithExt = $request->file('image')->getClientOriginalName ();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = $filename. '_'. time().'.'.$extension;
-                $data->image = $fileNameToStore;
-                $request->file('image')->storeAs('public/image/department', $fileNameToStore);
+                // $filenameWithExt = $request->file('image')->getClientOriginalName ();
+                // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // $extension = $request->file('image')->getClientOriginalExtension();
+                // $fileNameToStore = $filename. '_'. time().'.'.$extension;
+                // $data->image = $fileNameToStore;
+                // $request->file('image')->storeAs('public/image/department', $fileNameToStore);
+                $path = $request->file('image')->store('images/departments','s3');
+                Storage::disk('s3')->setVisibility($path,'public');
+                $data->image = Storage::disk('s3')->url($path);
         }
         $data->save();
         return response()->json(['success' => $data]);
@@ -125,12 +129,16 @@ class DepartmentController extends Controller
         
 
         if ($request->hasFile('image')) {
-                $filenameWithExt = $request->file('image')->getClientOriginalName ();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = $filename. '_'. time().'.'.$extension;
-                $data->image = $fileNameToStore;
-                $request->file('image')->storeAs('public/image/department', $fileNameToStore);
+                // $filenameWithExt = $request->file('image')->getClientOriginalName ();
+                // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // $extension = $request->file('image')->getClientOriginalExtension();
+                // $fileNameToStore = $filename. '_'. time().'.'.$extension;
+                // $data->image = $fileNameToStore;
+                // $request->file('image')->storeAs('public/image/department', $fileNameToStore);
+
+                $path = $request->file('image')->store('images/departments','s3');
+                Storage::disk('s3')->setVisibility($path,'public');
+                $data->image = Storage::disk('s3')->url($path);
         }
         $data->save();
         return response()->json(['success' => $data]);

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Validator;
-
+use Illuminate\Support\Facades\Storage;
 
 class CareerController extends Controller
 {
@@ -209,7 +209,7 @@ class CareerController extends Controller
             'first_name'=>'required|min:5|max:20',
             'last_name'=>'required|min:5',
             'gender'=>'required',
-            'file'=>'required',
+            'file'=>'required|mimes:jpeg,png,jpg,pdf,doc,docx|max:5048',
             'contact'=>'required|min:11|',
             'email'=>'required|email',
             'agreement'=>'required',
@@ -231,12 +231,17 @@ class CareerController extends Controller
 
         if ($request->hasFile('file')) {
 
-            $filenameWithExt = $request->file('file')->getClientOriginalName ();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('file')->getClientOriginalExtension();
-            $fileNameToStore = $filename. '_'. time().'.'.$extension;
-            $data->file = $fileNameToStore;
-            $request->file('file')->storeAs('public/files/applicant', $fileNameToStore);
+            // $filenameWithExt = $request->file('file')->getClientOriginalName ();
+            // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // $extension = $request->file('file')->getClientOriginalExtension();
+            // $fileNameToStore = $filename. '_'. time().'.'.$extension;
+            // $data->file = $fileNameToStore;
+            // $request->file('file')->storeAs('public/files/applicant', $fileNameToStore);
+
+            $path = $request->file('file')->store('files/applicants','s3');
+            Storage::disk('s3')->setVisibility($path,'public');
+            $data->file = Storage::disk('s3')->url($path);
+
         }
 
         $data->save();
