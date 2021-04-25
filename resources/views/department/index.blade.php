@@ -66,7 +66,7 @@
       <h3 class="card-title">List</h3>
 
       <div class="card-tools">
-        <button type="button"  data-url="/departments/create/" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Department">
+        <button type="button"  data-url="{{ route('departments.create') }}" class="btn btn-outline-primary btn-sm btn-modal"  title="Add Department">
           Add Department
         </button>
       </div>
