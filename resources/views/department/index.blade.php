@@ -7,8 +7,10 @@
          
          if(action_type == "edit") {
            $.LoadingOverlay('show')
+           var url = '{{ route("departments.edit", ":id") }}';
+           url = url.replace(':id',id);
             //modal.find('.modal-content').empty()
-            axios.get(`/departments/${id}/edit`).then((res) => { 
+            axios.get(url).then((res) => { 
               modal.find('.modal-content').html(res.data)
               modal.modal('show')
               $.LoadingOverlay('hide')
@@ -18,7 +20,8 @@
          }
  
          if(action_type == "delete") {
-
+           var url = '{{ route("departments.destroy", ":id") }}';
+           url = url.replace(':id',id);
             Swal.fire({
               title: 'Are you sure?',
               text: "",
@@ -30,7 +33,7 @@
             }).then((result) => {
               if (result.isConfirmed) {
                 $.LoadingOverlay('show')
-                axios.delete(`/departments/${id}`).then((res) => {
+                axios.delete(url).then((res) => {
                   tbl_dtable.ajax.reload()
                   Swal.fire(
                     'Deleted!',
@@ -107,7 +110,7 @@
             "processing": true,
             "serverSide": true,
             ajax: {
-                url: "/api/department/list",
+                url: "{{ route('department.list') }}",
             },
     });
 
@@ -137,7 +140,6 @@
 
        }
 
-       console.log(options)
 
        $.LoadingOverlay('show')
        axios(options).then((res) => {

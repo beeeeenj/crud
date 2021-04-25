@@ -163,13 +163,15 @@ class CareerController extends Controller
                 $status = '<span class="badge badge-danger">Closed</span>';
             }
 
+            $count = Applicant::where('career_id', $result->id)->count();
+
             $data[] = array(
                $result->title,
                $result->department->name,
                $result->employment_status,
                $result->location,
-               $result->no_of_vacancy,
                $status,
+               $count,
                $actions,
             );
            
@@ -245,8 +247,6 @@ class CareerController extends Controller
         }
 
         $data->save();
-    
-        return $count;
-        // return redirect('/')->with('success', 'Record saved!');
+        return redirect()->back()->with('success', 'record saved');   
     }
 }

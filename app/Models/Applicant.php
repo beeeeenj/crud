@@ -25,4 +25,17 @@ class Applicant extends Model
         'note',     
         'is_hired',     
     ];
+
+    public function career () {
+        return $this->belongsTo(Career::class, 'career_id');
+    }
+
+    public function getFullNameAttribute(){
+        if($this->middle_name) {
+            return $this->first_name . ' ' . $this->last_name;
+        }else{
+            return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+        }
+        
+    }
 }

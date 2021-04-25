@@ -62,11 +62,13 @@
                         <div class="clearfix">
                             <div class="box">
                                 <h4>Job Responsibility</h4>
-                                <div id="job_res">
+                                <div class="job_res">
                                     {!! nl2br($data->description) !!}
                                 </div>
                                 <h4>Educational Requirements</h4>
+                                <div class="job_res">
                                 {!! nl2br($data->educational_requirements) !!} 
+                                </div>
                                 <a href="{{ route('careers.apply', $data->slug) }}" class="btn btn-common">Apply for this Job Now</a>
                             </div>
                         </div>
@@ -114,7 +116,7 @@
 
 @section('script')
 <script>
-    var job_res = $("#job_res")
+    var job_res = $(".job_res")
     var bullets = job_res.find('li')
     
     bullets.each(function( index ) {

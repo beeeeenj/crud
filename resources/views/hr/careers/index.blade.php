@@ -87,8 +87,8 @@
               <th>Department</th>
               <th>Employment Status</th>
               <th>Location</th>
-              <th>No. of Vacancy</th>
               <th>Status</th>
+              <th>No. of Candidates</th>
               <th style="width: 1%"></th>
             </tr>
             </thead>
